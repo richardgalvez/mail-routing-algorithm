@@ -32,7 +32,7 @@ class HashMap:
         bucket_list = self.table[bucket]
         for kv in bucket_list:
             if kv[0] == key:
-                return kv[1]  # The key's value
+                return kv[1]  # This is the key's value.
         return None
 
     # Method to remove an item with matching key from the hash map.
@@ -41,7 +41,6 @@ class HashMap:
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
-        # Remove the item from the bucket list if it is present.
-        for kv in bucket_list:
-            if kv[0] == key:
-                bucket_list.remove([kv[0], kv[1]])
+        # Remove the item(s) from the bucket list if it is present.
+        if key in bucket_list:
+            bucket_list.remove(key)

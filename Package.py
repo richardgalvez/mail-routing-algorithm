@@ -1,26 +1,28 @@
 class Package:
     """ Represents the item(s) being delivered by the Truck. """
 
-    def __init__(self, package_id, address, city, zip_code, weight, status,
-                 deadline_time, delivery_time, departure_time):
+    def __init__(self, package_id, address, city, state, zip_code, deadline_time, weight, status):
         self.package_id = package_id
         self.address = address
         self.city = city
+        self.state = state
         self.zip_code = zip_code
+        self.deadline_time = deadline_time
         self.weight = weight
         self.status = status
-        self.deadline_time = deadline_time
-        self.delivery_time = delivery_time
-        self.departure_time = departure_time
+        self.delivery_time = None
+        self.departure_time = None
 
     def __str__(self):
-        return "%s %s %s %s %s %s %s" % (self.package_id, self.address, self.deadline, self.city,
-                                         self.zip_code, self.weight, self.status)
+        return "%s %s %s %s %s %s %s %s %s" % (self.package_id, self.address, self.city, self.state,
+                                               self.zip_code, self.deadline_time, self.weight, self.status,
+                                               self.delivery_time)
 
+    # Method to get status of the package based on time factors.
     def get_status(self, time_difference):
         if self.delivery_time < time_difference:
-            self.status = "Package Delivered!"
+            self.status = "| DELIVERED |"
         elif self.departure_time > time_difference:
-            self.status = "Package is on the way!"
+            self.status = "| EN ROUTE |"
         else:
-            self.status = "Package is currently at Hub."
+            self.status = "| AT HUB |"
