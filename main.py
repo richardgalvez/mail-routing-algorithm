@@ -1,4 +1,4 @@
-# Student Name: Richard Galvez›
+# Student Name: Richard Galvez
 # Student ID: 010611634
 
 # Import modules and classes required for main program
