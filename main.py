@@ -1,7 +1,7 @@
 # Student Name: Richard Galvez
 # Student ID: 010611634
 
-# Import modules and classes required for main program
+# Import modules and classes required for main program.
 import datetime
 import csv
 from HashMap import HashMap
