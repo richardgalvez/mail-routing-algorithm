@@ -1,6 +1,7 @@
-# Student Name: Richard Galvez
+# Student Name: Richard Galvez›
 # Student ID: 010611634
 
+# Import modules and classes required for main program
 import datetime
 import csv
 from HashMap import HashMap
@@ -13,12 +14,12 @@ with open("csv/WGUPS-Address-Table.csv") as csvfile1:
     address_reader = csv.reader(csvfile1)
     address_reader = list(address_reader)
 
-# Read Address information from provided file.
+# Read Distance information from provided file.
 with open("csv/WGUPS-Distance-Table.csv") as csvfile2:
     distance_reader = csv.reader(csvfile2)
     distance_reader = list(distance_reader)
 
-# Read Address information from provided file.
+# Read Package information from provided file.
 with open("csv/WGUPS-Package-File.csv") as csvfile3:
     package_reader = csv.reader(csvfile3)
     package_reader = list(package_reader)
@@ -126,7 +127,7 @@ deliver_packages(truck3)
 class Main:
     """ This is the main program for the user interface. """
     print("Welcome to the Western Governors University Parcel Service (WGUPS)!")
-    print("The mileage for the route is: " + str(get_mileage(truck1, truck2, truck3)))
+    print("The total mileage for the current route is: " + str(get_mileage(truck1, truck2, truck3)))
 
     # User is prompted to begin by entering in "time".
     text = input("What would you like to do? Enter 'start' to begin or 'q' to quit the program.\n")
