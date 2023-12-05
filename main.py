@@ -125,6 +125,7 @@ deliver_packages(truck3)
 
 class Main:
     """ This is the main program for the user interface. """
+    global convert_time
     print("Welcome to the Western Governors University Parcel Service (WGUPS)!")
     print("The mileage for the route is: " + str(get_mileage(truck1, truck2, truck3)))
 
@@ -134,8 +135,7 @@ class Main:
     while not program_end:
         if text == "start":
             # User is prompted to enter a specific time with validation.
-            user_time = input(
-                "Please enter a time in the format HH:MM:SS to check status of related package(s). Enter 'q' to quit.\n")
+            user_time = input("Please enter a time in the format HH:MM:SS to check status of related package(s). Enter 'q' to quit.\n")
             if user_time.lower() == 'q':
                 print("Program exiting. Have a nice day!")
                 exit()
@@ -173,8 +173,7 @@ class Main:
                     print("Program exiting. Have a nice day!")
                     exit()
                 else:
-                    print(
-                        "Command not recognized. Please enter 'single' to view one package, 'all' to view all packages, or 'q' to exit the program.")
+                    print("Command not recognized. Please enter 'single' to view one package, 'all' to view all packages, or 'q' to exit the program.")
         elif text == "q":
             print("Program exiting. Have a nice day!")
             program_end = True

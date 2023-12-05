@@ -14,15 +14,15 @@ class Package:
         self.departure_time = None
 
     def __str__(self):
-        return "%s %s %s %s %s %s %s %s %s" % (self.package_id, self.address, self.city, self.state,
-                                               self.zip_code, self.deadline_time, self.weight, self.status,
-                                               self.delivery_time)
+        return ("Package ID: %s\nAddress: %s, %s, %s %s | Weight: %s | Deadline time: %s\nStatus: %s | Delivery time: %s" %
+                (self.package_id, self.address, self.city, self.state,
+                 self.zip_code,self.weight, self.deadline_time, self.status, self.delivery_time))
 
     # Method to get status of the package based on time factors.
     def get_status(self, time_difference):
         if self.delivery_time < time_difference:
-            self.status = "| DELIVERED |"
+            self.status = "DELIVERED"
         elif self.departure_time > time_difference:
-            self.status = "| EN ROUTE |"
+            self.status = "EN ROUTE"
         else:
-            self.status = "| AT HUB |"
+            self.status = "AT HUB"
