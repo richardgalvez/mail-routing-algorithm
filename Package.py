@@ -23,6 +23,6 @@ class Package:
         if self.delivery_time < time_difference:
             self.status = "DELIVERED"
         elif self.departure_time > time_difference:
-            self.status = "EN ROUTE"
-        else:
             self.status = "AT HUB"
+        else:
+            self.status = "EN ROUTE"

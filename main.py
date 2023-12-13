@@ -74,14 +74,14 @@ package_hmap = HashMap()
 load_packages("csv/WGUPS-Package-File.csv", package_hmap)
 
 # Instantiate 3 truck objects.
-truck1 = Truck([1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 17, 18, None,
+truck1 = Truck([1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 16, 18, None,
                "4001 South 700 East", 0.0, datetime.timedelta(hours=8))
 
-truck2 = Truck([3, 6, 12, 17, 18, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 17, 18, None,
+truck2 = Truck([3, 9, 12, 17, 18, 21, 23, 24, 27, 35, 36, 39], 16, 18, None,
                "4001 South 700 East", 0.0, datetime.timedelta(hours=10, minutes=20))
 
-truck3 = Truck([2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 17, 18, None,
-               "4001 South 700 East", 0.0, datetime.timedelta(hours=5, minutes=5))
+truck3 = Truck([2, 4, 5, 6, 7, 8, 10, 11, 22, 25, 26, 28, 32, 33, 38], 16, 18, None,
+               "4001 South 700 East", 0.0, datetime.timedelta(hours=9, minutes=5))
 
 
 # Function based on nearest neighbor algorithm to sort packages while calculating distance of a (t)ruck.
@@ -109,7 +109,7 @@ def deliver_packages(t):
         t.mileage += next_addr
         # Update (t)ruck's current address to the package driven to.
         t.address = next_pkg.address
-        # Update the time it took for truck to drive to closest package.
+        # Update the time it took for truck to drive to the closest package.
         t.time += datetime.timedelta(hours=next_addr / 18)
         next_pkg.delivery_time = t.time
         next_pkg.departure_time = t.departure_time
@@ -122,6 +122,12 @@ deliver_packages(truck2)
 # Ensure that the 3rd truck does not leave until either the 1st or 2nd truck are done with their deliveries.
 truck3.departure_time = min(truck1.time, truck2.time)
 deliver_packages(truck3)
+
+# Get package #9 from the hash map for later use.
+pkg9 = package_hmap.lookup(9)
+# Store original address and zip code to keep for later use.
+pkg9_original_address = pkg9.address
+pkg9_original_zip = pkg9.zip_code
 
 
 class Main:
@@ -147,8 +153,17 @@ class Main:
                     convert_time = datetime.timedelta(hours=int(hr), minutes=int(min), seconds=int(sec))
                     valid_time = True
                 except ValueError:
-                    print("Invalid time format.")
-                    user_time = input("Please enter a valid time in the format HH:MM:SS or 'q' to quit.\n")
+                    user_time = input("Invalid time format. Please enter a valid time in the format HH:MM:SS or 'q' to quit.\n")
+
+            # Check if the entered time is before 10:20:00, as the new address will update after 10:20 am.
+            if convert_time < datetime.timedelta(hours=10, minutes=20):
+                # Update the address for package #9 if before 10:20 am.
+                pkg9.address = "300 State St"
+                pkg9.zip_code = "84103"
+            elif convert_time >= datetime.timedelta(hours=10, minutes=20):
+                # Reset to the address from CSV (correct address) if the time is after 10:20 am.
+                pkg9.address = pkg9_original_address
+                pkg9.zip_code = pkg9_original_zip
 
             # User is prompted if they would like to see the status of all packages or only one.
             next_input = input("To view individual package status, enter 'single'. To view all packages, enter 'all'. To quit, enter 'q'.\n")
@@ -174,7 +189,7 @@ class Main:
                     print("Program exiting. Have a nice day!")
                     exit()
                 else:
-                    print("Command not recognized. Please enter 'single' to view one package, 'all' to view all packages, or 'q' to exit the program.")
+                    next_input = input("Command not recognized. Please enter 'single' to view one package, 'all' to view all packages, or 'q' to exit the program.\n")
         elif text == "q":
             print("Program exiting. Have a nice day!")
             program_end = True
